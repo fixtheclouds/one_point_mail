@@ -18,7 +18,7 @@ module OnePointMail
     end
 
     def get(path, params={})
-      self.class.get([uri(path), params.to_query].join('?'), payload)
+      self.class.get([uri(path), to_query(params)].join('?'), payload)
     end
 
     def put(path, params={})
@@ -39,6 +39,10 @@ module OnePointMail
         'Api_Key',
         api_key
       ].compact.join('/')
+    end
+
+    def to_query(hash)
+      hash.to_a.map { |x| "#{x[0]}=#{x[1]}" }.join("&")
     end
 
     def payload(params = {})
